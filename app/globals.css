@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+.bgs{
+  background:linear-gradient(0deg, rgba(143,138,255,1) 0%, rgba(255,255,255,1) 100%);
+}
+.clipPath{
+  clip-path: polygon(0 0, 100% 0%, 100% 87%, 0 97%);
+}
+@media (max-width:767px){
+  .clipPath{
+    clip-path: polygon(0 0, 100% 0%, 100% 95%, 0 97%);
+  }
+}
+.career-clipPath{
+  clip-path: polygon(0% 0%, 100% 0%, 95% 100%, 0% 100%);
+}
+.career-img-clipPath{
+  clip-path: polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+header{
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  padding: 16px;
+  transition: all 0.3s ease;
+}
+header.sticky{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 10px;
+  background-color: #ffffffa6;
+  backdrop-filter: blur(5px);
+  box-shadow: 1px 2px 5px 0px rgb(0 0 0 / 8%);
+}
+.servicesHeroSection{
+  position: relative;
+  z-index: 20;
+}
+.servicesHeroSection::before{
+  content: '';
+  width: 100%;
+  height: 350px;
+  clip-path: polygon(0 0, 100% 0%, 100% 85%, 0 97%);
+  background:linear-gradient(0deg, rgba(143,138,255,1) 0%, rgba(255,255,255,1) 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.embla {
+  overflow: hidden;
+  
+}
+.embla__container {
+  display: flex;
+  gap: 5px;
+  cursor:grab;
+  user-select: none;
+}
+.embla__slide {
+  flex: 0 0 32.88%;
+  min-width: 0;
+}
+@media (max-width:767px){
+  .embla__slide {
+    flex: 0 0 50%;
+    min-width: 0;
+  }
+}
+@media (max-width:400px){
+  .embla__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+}
+
+.splide__pagination__page.is-active{
+  background: #7c75ff !important;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiAccordion-root.MuiAccordion-rounded.Mui-expanded.MuiAccordion-gutters.css-1qkil1h-MuiPaper-root-MuiAccordion-root {
+  background-color: #EAE9FF;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+.cnt-form{
+  background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 30.21%);
+  box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1)
+}

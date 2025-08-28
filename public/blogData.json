@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "title": "First Blog Post",
+      "slug": "first-blog-post",
+      "img": "/img/blogs/blog-1.jpg",
+      "alt": "best seo in mumbai",
+      "date": "02 Sep 2024",
+      "desc": "This is the content of the first blog post.",
+      "content": "This is the content of the first blog post."
+    },
+    {
+      "title": "Second Blog Post",
+      "slug": "second-blog-post",
+      "img": "/img/blogs/blog-1.jpg",
+      "alt": "best seo in kolkata",
+      "date": "11 Sep 2024",
+      "desc": "This is the content of the second blog post.",
+      "content": "This is the content of the second blog post."
+    }
+  ]
+}

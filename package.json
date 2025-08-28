@@ -1,0 +1,40 @@
+{
+  "name": "digitalwolf",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "cross-env NODE_ENV=production node server.js",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@headlessui/react": "^2.1.2",
+    "@heroicons/react": "^2.1.5",
+    "@mui/icons-material": "^5.16.7",
+    "@mui/material": "^5.16.7",
+    "@ntegral/react-owl-carousel": "^1.0.1",
+    "@splidejs/react-splide": "^0.7.12",
+    "embla-carousel-autoplay": "^8.1.8",
+    "embla-carousel-react": "^8.1.8",
+    "express": "^4.19.2",
+    "he": "^1.2.0",
+    "heroicons": "^2.1.5",
+    "html-react-parser": "^5.1.12",
+    "jquery": "^3.7.1",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.6.0",
+    "next": "14.2.5",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.9"
+  }
+}
