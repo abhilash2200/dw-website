@@ -5,8 +5,11 @@ import Header from "./common/Header";
 import Footer from "./common/Footer";
 import PopupForm from "./common/Popup";
 import { ContextProvider } from "./context/MyContext";
+import Script from "next/script";
+import { AnalyticsTracker } from "./AnalyticsTracker";
 
 const inter = Inter({ subsets: ["latin"] });
+
 export const metadata = {
   title: "Best Digital Marketing Company in Kolkata | SEO, Ads & Branding | Digital Wolf",
   description: "Boost your brand with Digital Wolf, the best digital marketing company in Kolkata. Expert SEO, ads & branding services to grow your business online!",
@@ -39,23 +42,38 @@ const jsonLd = {
     "https://www.linkedin.com/company/digitalwolf1/",
     "https://www.digitalwolf.co.in/"
   ]
-}
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
       </head>
       <body className={inter.className}>
         <ContextProvider>
-            <Header/>
-            {children}
-            <Footer/>
-            <PopupForm/>
+          <Header />
+          <AnalyticsTracker />
+          {children}
+          <Footer />
+          <PopupForm />
         </ContextProvider>
       </body>
     </html>
