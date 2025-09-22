@@ -110,7 +110,7 @@ const callsToAction = [
     href: "mailto:marketing@digitalwolf.co.in",
     icon: EnvelopeIcon,
   },
-  { name: "Contact Us", href: "tel:+918250054478", icon: PhoneIcon },
+  { name: "Contact Us", href: "tel:+917003659978", icon: PhoneIcon },
 ];
 
 export default function Header() {
