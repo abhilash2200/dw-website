@@ -9,12 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.0",
-    "@emotion/styled": "^11.13.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
-    "@mui/icons-material": "^5.16.7",
-    "@mui/material": "^5.16.7",
+    "@mui/icons-material": "^7.3.6",
+    "@mui/material": "^7.3.6",
     "@ntegral/react-owl-carousel": "^1.0.1",
     "@splidejs/react-splide": "^0.7.12",
     "embla-carousel-autoplay": "^8.1.8",
@@ -26,9 +26,9 @@
     "jquery": "^3.7.1",
     "mongodb": "^6.8.0",
     "mongoose": "^8.6.0",
-    "next": "14.2.5",
-    "react": "^18",
-    "react-dom": "^18"
+    "next": "^16.0.10",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

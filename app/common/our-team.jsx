@@ -30,12 +30,12 @@ function OurTeam() {
             name:'Abhas Pandia',
             designation:'Ad Expert'
         },
-        {
-            id:5,
-            img:'/img/team/simi.jpg',
-            name:'Simi Acharya',
-            designation:'Ad Expert'
-        },
+        // {
+        //     id:5,
+        //     img:'/img/team/simi.jpg',
+        //     name:'Simi Acharya',
+        //     designation:'Ad Expert'
+        // },
         {
             id:6,
             img:'/img/team/banasree.jpg',
@@ -60,18 +60,18 @@ function OurTeam() {
             name:'Anirban Bhowmick',
             designation:'Content Writer'
         },
-        {
-            id:9,
-            img:'/img/team/sanchary.jpg',
-            name:'Sanchary Chanda',
-            designation:'Graphics Designing'
-        },
-        {
-            id:10,
-            img:'/img/team/kk.jpg',
-            name:'Kamalkanta Mondal',
-            designation:'Graphics Designing'
-        },
+        // {
+        //     id:9,
+        //     img:'/img/team/sanchary.jpg',
+        //     name:'Sanchary Chanda',
+        //     designation:'Graphics Designing'
+        // },
+        // {
+        //     id:10,
+        //     img:'/img/team/kk.jpg',
+        //     name:'Kamalkanta Mondal',
+        //     designation:'Graphics Designing'
+        // },
         {
             id:11,
             img:'/img/team/sourav.jpg',
@@ -84,18 +84,18 @@ function OurTeam() {
             name:'Rukshar Sheikh',
             designation:'Web Developer'
         },
-        {
-            id:13,
-            img:'/img/team/amit.jpg',
-            name:'Amit Kumar',
-            designation:'Web Developer'
-        },
-        {
-            id:14,
-            img:'/img/team/shahrukh.jpg',
-            name:'Mohammad Shahrukh',
-            designation:'Web Developer'
-        },
+        // {
+        //     id:13,
+        //     img:'/img/team/amit.jpg',
+        //     name:'Amit Kumar',
+        //     designation:'Web Developer'
+        // },
+        // {
+        //     id:14,
+        //     img:'/img/team/shahrukh.jpg',
+        //     name:'Mohammad Shahrukh',
+        //     designation:'Web Developer'
+        // },
     ]
 
   return (
