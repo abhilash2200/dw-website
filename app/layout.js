@@ -7,6 +7,7 @@ import PopupForm from "./common/Popup";
 import { ContextProvider } from "./context/MyContext";
 import Script from "next/script";
 import { AnalyticsTracker } from "./AnalyticsTracker";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -73,7 +74,9 @@ export default function RootLayout({ children }) {
           <AnalyticsTracker />
           {children}
           <Footer />
-          <PopupForm />
+          <Suspense fallback={null}>
+            <PopupForm />
+          </Suspense>
         </ContextProvider>
       </body>
     </html>

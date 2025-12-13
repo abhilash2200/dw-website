@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import ContactHeroSection from './ContactHeroSection'
 import ContactInfo from './contact-info'
 import Faq from '../common/Faq'
@@ -9,7 +9,9 @@ function ContactUs() {
   return (
     <>
       <ContactHeroSection/>
-      <ContactInfo/>
+      <Suspense fallback={null}>
+        <ContactInfo/>
+      </Suspense>
       <ContactMap/>
     </>
   )
