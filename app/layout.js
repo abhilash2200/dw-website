@@ -8,6 +8,7 @@ import { ContextProvider } from "./context/MyContext";
 import Script from "next/script";
 import { AnalyticsTracker } from "./AnalyticsTracker";
 import { Suspense } from "react";
+import Snowfall from "./common/Snowfall";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -72,6 +73,7 @@ export default function RootLayout({ children }) {
         <ContextProvider>
           <Header />
           <AnalyticsTracker />
+          <Snowfall />
           {children}
           <Footer />
           <Suspense fallback={null}>

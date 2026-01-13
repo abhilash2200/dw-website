@@ -18,7 +18,7 @@ function HowWeWork() {
             </div>
         </div>
         <div className='flex flex-wrap gap-y-5'>
-            <div className='w-[100] lg:w-[33.33%] px-3'>
+            <div className='w-[100%] md:w-[33.33%] px-3'>
                 <div className='bg-[#843AFF] text-white py-5'>
                     <div className='pb-3 px-5'>
                         <p className='text-[30px]'>01.</p>
@@ -31,7 +31,7 @@ function HowWeWork() {
                     </div>
                 </div>
             </div>
-            <div className='w-[100] lg:w-[33.33%] px-3'>
+            <div className='w-[100%] md:w-[33.33%] px-3'>
                 <div className='bg-[#843AFF] text-white py-5'>
                     <div className='pb-3 px-5'>
                         <p className='text-[30px]'>02.</p>
@@ -44,7 +44,7 @@ function HowWeWork() {
                     </div>
                 </div>
             </div>
-            <div className='w-[100] lg:w-[33.33%] px-3'>
+            <div className='w-[100%] md:w-[33.33%] px-3'>
                 <div className='bg-[#843AFF] text-white py-5'>
                     <div className='pb-3 px-5'>
                         <p className='text-[30px]'>03.</p>
