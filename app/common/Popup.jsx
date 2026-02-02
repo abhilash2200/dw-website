@@ -49,24 +49,16 @@ export default function PopupForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const myHeaders = new Headers();
-    const username = "DwCrmApiUser";
-    const password = "DW_CRMApi@32145@#";
-    const token = process.env.API_TOKEN_KEY;
-    const credentials = btoa(`${username}:${password}`);
-    myHeaders.append("KeyToken", `${token}`);
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Basic ${credentials}`);
 
     const raw = JSON.stringify({
       FullName: formData.name,
       EmailId: formData.email,
       MobileNo: formData.phone,
-      Remarks: "",
-      EnquirySource: "website",
       Address: formData.location,
       PostalCode: "",
       Query: "",
+      EnquirySource: "website",
+      Remarks: "",
       EnquiryType: formData.service,
       UTMSource: utmSource || url,
       AlternateNo: "",
@@ -76,14 +68,14 @@ export default function PopupForm() {
       CurrentLocation: "",
       Preferred_Location: "",
       Technical_Score: "",
-      TEST_Status: "",
     });
 
     const requestOptions = {
       method: "POST",
-      headers: myHeaders,
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: raw,
-      redirect: "follow",
     };
 
     try {

@@ -18,29 +18,13 @@ export default function BlogDetails() {
 
   useEffect(() => {
     const fetchPost = async () => {
-      const myHeaders = new Headers();
-      const username = "DwCrmApiUser";
-      const password = "DW_CRMApi@32145@#";
-      const token = process.env.API_TOKEN_KEY;
-      const credentials = btoa(`${username}:${password}`);
-      myHeaders.append("KeyToken", `${token}`);
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Basic ${credentials}`);
-
-      const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow",
-      };
-
-      const res = await fetch(
-        `https://dwapi.thenoncoders.in/api/v1/get_blogdetailbyurl?url=${productUrl}`,
-        requestOptions
-      );
-      const data = await res.json();
-      /* const foundPost = data?.data?.find((post) => post.PostId === productId); */
-
-      setPost(data);
+      try {
+        const res = await fetch(`/api/blogs/${encodeURIComponent(productUrl)}?url=${encodeURIComponent(productUrl)}`);
+        const data = await res.json();
+        setPost(data);
+      } catch (error) {
+        console.error("Error fetching blog post:", error);
+      }
     };
 
     fetchPost();

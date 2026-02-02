@@ -14,26 +14,13 @@ function Blogs() {
 
   useEffect(() => {
     const fetchBlogList = async () => {
-      const myHeaders = new Headers();
-      const username = "DwCrmApiUser";
-      const password = "DW_CRMApi@32145@#";
-      const token = process.env.API_TOKEN_KEY;
-      const credentials = btoa(`${username}:${password}`);
-      myHeaders.append("KeyToken", `${token}`);
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Basic ${credentials}`);
-
-      const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow",
-      };
-      const res = await fetch(
-        "https://dwapi.thenoncoders.in/api/v1/get_bloglist",
-        requestOptions
-      );
-      const data = await res.json();
-      setPosts(data);
+      try {
+        const res = await fetch("/api/blogs");
+        const data = await res.json();
+        setPosts(data);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      }
     };
 
     fetchBlogList();

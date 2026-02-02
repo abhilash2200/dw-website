@@ -6,7 +6,7 @@ const MyContext = createContext()
 export function ContextProvider({children}){
     const [popup, openPopup] = useState(false)
 
-    const api = 'https://dwapi.thenoncoders.in/api/v1/insert_lead_data'
+    const api = `/api/contact`
     
     return(
         <MyContext.Provider value={{popup, openPopup,api}}>
