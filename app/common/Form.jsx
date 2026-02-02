@@ -4,7 +4,7 @@ import { Button, CircularProgress, colors, MenuItem, TextField } from '@mui/mate
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useMyContext } from '../context/MyContext';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 function Form() {
     const {api} = useMyContext() 
@@ -22,9 +22,11 @@ function Form() {
     const [formData, setFormData] = useState(initialData);
     const [isSubmitting, setIsSubmitting] = useState(false);
     
+    const router = useRouter();
     const url = usePathname();
     const searchParams = useSearchParams();
     const utmSource = searchParams.get("utm_source");
+    const campaign = searchParams.get("campaign");
     
     const handleChange = (e) => {
         setFormData({
@@ -37,7 +39,7 @@ function Form() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const raw = JSON.stringify({
+    const payload = {
         "FullName": formData.name,
         "EmailId": formData.email,
         "MobileNo": formData.phone,
@@ -54,8 +56,17 @@ function Form() {
         "Position_Applied_For": "",
         "CurrentLocation": "",
         "Preferred_Location": "",
-        "Technical_Score": ""
-    });
+        "Technical_Score": "",
+        "DataCategory": "Service",
+        "InterestedService": formData.service,
+    };
+
+    // Add Campaign only if available (from URL params)
+    if (campaign) {
+        payload.Campaign = campaign;
+    }
+
+    const raw = JSON.stringify(payload);
 
     const requestOptions = {
         method: "POST",
@@ -69,17 +80,18 @@ function Form() {
         const res = await fetch(api, requestOptions);
         const result = await res.json();
         
-        if(result.status == 0){
-            setOpenSnackbar(true);
-            setFormMessage(result.message);
-            setFormData(initialData);
+        if(result.status === 0){
+            // Redirect to thank you page with name parameter
+            const nameParam = formData.name ? `?name=${encodeURIComponent(formData.name)}` : '';
+            router.push(`/thank-you${nameParam}`);
         }else{
             setOpenWarningSnackbar(true);
             setFormMessage(result.message);
+            setIsSubmitting(false);
         }
     }catch(e){
-        alert(e.message || 'Somthing went wrong!!!');
-    }finally{
+        setOpenWarningSnackbar(true);
+        setFormMessage(e.message || 'Something went wrong!!!');
         setIsSubmitting(false);
     }
 

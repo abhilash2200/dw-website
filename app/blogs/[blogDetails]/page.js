@@ -2,21 +2,21 @@ import BlogDetails from './blogDetails';
 
 // This function dynamically sets the meta tags using server-side data fetching
 export async function generateMetadata({ params }) {
-  const { blogDetails } = params;
+  const { blogDetails } = await params;
 
   try {
     // Since this runs on the server, we can call the external API directly (no CORS)
     const myHeaders = new Headers();
     const username = 'DwCrmApiUser';
     const password = 'DW_CRMApi@32145@#';
-    const credentials = btoa(`${username}:${password}`);
+    const credentials = Buffer.from(`${username}:${password}`).toString('base64');
     myHeaders.append("Auth-Api-Key", process.env.NEXT_PUBLIC_AUTH_API_KEY);
     myHeaders.append("keyToken", process.env.NEXT_PUBLIC_KEY_TOKEN);
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Basic ${credentials}`);
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/get_blogdetailbyurl?url=${blogDetails}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/get_blogdetailbyurl?url=${encodeURIComponent(blogDetails)}`,
       {
         method: "GET",
         headers: myHeaders,

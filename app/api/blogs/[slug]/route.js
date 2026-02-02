@@ -10,7 +10,7 @@ export async function GET(request, { params }) {
     const myHeaders = new Headers();
     const username = 'DwCrmApiUser';
     const password = 'DW_CRMApi@32145@#';
-    const credentials = btoa(`${username}:${password}`);
+    const credentials = Buffer.from(`${username}:${password}`).toString('base64');
     myHeaders.append("Auth-Api-Key", process.env.NEXT_PUBLIC_AUTH_API_KEY);
     myHeaders.append("keyToken", process.env.NEXT_PUBLIC_KEY_TOKEN);
     myHeaders.append("Content-Type", "application/json");

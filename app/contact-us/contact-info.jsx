@@ -9,7 +9,7 @@ import Link from "next/link";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useMyContext } from "../context/MyContext";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 function ContactInfo() {
   const { api } = useMyContext();
@@ -27,9 +27,11 @@ function ContactInfo() {
   const [formData, setFormData] = useState(initialData);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const router = useRouter();
   const url = usePathname();
   const searchParams = useSearchParams();
   const utmSource = searchParams.get("utm_source");
+  const campaign = searchParams.get("campaign");
 
   const handleChange = (e) => {
     setFormData({
@@ -42,7 +44,7 @@ function ContactInfo() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const raw = JSON.stringify({
+    const payload = {
       FullName: formData.name,
       EmailId: formData.email,
       MobileNo: formData.phone,
@@ -60,7 +62,16 @@ function ContactInfo() {
       CurrentLocation: "",
       Preferred_Location: "",
       Technical_Score: "",
-    });
+      DataCategory: "Service",
+      InterestedService: formData.service,
+    };
+
+    // Add Campaign only if available (from URL params)
+    if (campaign) {
+      payload.Campaign = campaign;
+    }
+
+    const raw = JSON.stringify(payload);
 
     const requestOptions = {
       method: "POST",
@@ -74,17 +85,18 @@ function ContactInfo() {
       const res = await fetch(api, requestOptions);
       const result = await res.json();
       /* console.log(result, 'result'); */
-      if (result.status == 0) {
-        setOpenSnackbar(true);
-        setFormMessage(result.message);
-        setFormData(initialData);
+      if (result.status === 0) {
+        // Redirect to thank you page with name parameter
+        const nameParam = formData.name ? `?name=${encodeURIComponent(formData.name)}` : '';
+        router.push(`/thank-you${nameParam}`);
       } else {
         setOpenWarningSnackbar(true);
         setFormMessage(result.message);
+        setIsSubmitting(false);
       }
     } catch (e) {
-      alert(e.message || "Somthing went wrong!!!");
-    } finally {
+      setOpenWarningSnackbar(true);
+      setFormMessage(e.message || "Something went wrong!!!");
       setIsSubmitting(false);
     }
   };
@@ -265,7 +277,7 @@ function ContactInfo() {
                       sx={style}
                     />
                   </div>
-                  <div className="w-[100%] lg:w-[100%] px-3">
+                  <div className="w-[100%] px-3">
                     <TextField
                       fullWidth
                       className="rounded-lg"
@@ -275,6 +287,8 @@ function ContactInfo() {
                       onChange={handleChange}
                       select
                       label="Services"
+                      variant="outlined"
+                      required
                       sx={style}
                     >
                       {services.map((val, i) => {
@@ -298,6 +312,7 @@ function ContactInfo() {
                       label="Write a message"
                       rows={3}
                       multiline
+                      required
                       sx={style}
                     />
                   </div>

@@ -13,7 +13,7 @@ import {
   Snackbar,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -35,9 +35,11 @@ export default function PopupForm() {
   const [formData, setFormData] = React.useState(initialData);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
+  const router = useRouter();
   const url = usePathname();
   const searchParams = useSearchParams();
   const utmSource = searchParams.get("utm_source");
+  const campaign = searchParams.get("campaign");
 
   const handleChangeFormData = (e) => {
     setFormData({
@@ -50,7 +52,7 @@ export default function PopupForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const raw = JSON.stringify({
+    const payload = {
       FullName: formData.name,
       EmailId: formData.email,
       MobileNo: formData.phone,
@@ -68,7 +70,16 @@ export default function PopupForm() {
       CurrentLocation: "",
       Preferred_Location: "",
       Technical_Score: "",
-    });
+      DataCategory: "Service",
+      InterestedService: formData.service,
+    };
+
+    // Add Campaign only if available (from URL params)
+    if (campaign) {
+      payload.Campaign = campaign;
+    }
+
+    const raw = JSON.stringify(payload);
 
     const requestOptions = {
       method: "POST",
@@ -83,17 +94,19 @@ export default function PopupForm() {
       const result = await res.json();
       /* console.log(result, 'result'); */
 
-      if (result.status == 0) {
-        setOpenSnackbar(true);
-        setFormMessage(result.message);
-        setFormData(initialData);
+      if (result.status === 0) {
+        // Close popup and redirect to thank you page with name parameter
+        openPopup(false);
+        const nameParam = formData.name ? `?name=${encodeURIComponent(formData.name)}` : '';
+        router.push(`/thank-you${nameParam}`);
       } else {
         setOpenWarningSnackbar(true);
         setFormMessage(result.message);
+        setIsSubmitting(false);
       }
     } catch (e) {
-      alert(e.message || "Somthing went wrong!!!");
-    } finally {
+      setOpenWarningSnackbar(true);
+      setFormMessage(e.message || "Something went wrong!!!");
       setIsSubmitting(false);
     }
   };
