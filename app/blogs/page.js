@@ -5,10 +5,10 @@ import Blogs from './blogs'
 function BulkMessageServices() {
 
   return (
-    <>
+    <main>
       <BlogHeroSection/>
       <Blogs/>
-    </>
+    </main>
   )
 }
 
