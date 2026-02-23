@@ -12,7 +12,7 @@ export default function BlogDetailLayout({ children }) {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[260px_1fr_300px] xl:gap-10">
           {/* Left sidebar: Table of Contents – sticky below header */}
           <aside
-            className="order-2 lg:order-1 lg:sticky lg:self-start"
+            className="order-1 lg:sticky lg:self-start"
             style={{ top: HEADER_OFFSET }}
             aria-label="Table of contents"
           >
@@ -20,7 +20,7 @@ export default function BlogDetailLayout({ children }) {
           </aside>
 
           {/* Main: Blog content – normal document flow */}
-          <main className="order-1 min-w-0 lg:order-2">
+          <main className="order-2 min-w-0">
             {children}
           </main>
 
