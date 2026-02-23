@@ -38,7 +38,7 @@ export async function generateMetadata({ params }) {
   }
 }
 
-// The BlogPage component is a client component, so we just render it here
-export default function Page() {
-  return <BlogDetails/>;
+export default async function Page({ params }) {
+  const { blogDetails } = await params;
+  return <BlogDetails slug={blogDetails} isPreview={false} />;
 }

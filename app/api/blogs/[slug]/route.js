@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request, { params }) {
   try {
-    const { slug } = params;
+    const { slug } = await params;
     const { searchParams } = new URL(request.url);
-    // Use the 'url' query parameter if provided, otherwise use the slug from the route
     const url = searchParams.get('url') || slug;
+    const isPreview = searchParams.get('preview') === 'true';
 
     const myHeaders = new Headers();
     const username = 'DwCrmApiUser';
@@ -16,8 +16,9 @@ export async function GET(request, { params }) {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Basic ${credentials}`);
 
+    const previewParam = isPreview ? '&preview=true' : '';
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/get_blogdetailbyurl?url=${encodeURIComponent(url)}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/get_blogdetailbyurl?url=${encodeURIComponent(url)}${previewParam}`,
       {
         method: 'GET',
         headers: myHeaders,
@@ -26,7 +27,14 @@ export async function GET(request, { params }) {
     );
 
     const data = await response.json();
-    return NextResponse.json(data);
+
+    const responseHeaders = new Headers();
+    if (isPreview) {
+      responseHeaders.set('X-Robots-Tag', 'noindex, nofollow');
+      responseHeaders.set('Cache-Control', 'no-store');
+    }
+
+    return NextResponse.json(data, { headers: responseHeaders });
   } catch (error) {
     return NextResponse.json(
       { status: 1, message: error.message || 'Something went wrong!' },
