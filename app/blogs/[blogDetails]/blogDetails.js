@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 import * as he from "he";
 import Image from "next/image";
@@ -16,6 +16,7 @@ export default function BlogDetails({ slug: slugProp, isPreview = false }) {
   const { setLoading, setBlogId } = useBlogDetailLoading();
 
   const [post, setPost] = useState(null);
+  const contentRef = useRef(null);
 
   useEffect(() => {
     if (!slug) return;
@@ -45,6 +46,20 @@ export default function BlogDetails({ slug: slugProp, isPreview = false }) {
       ? post.data[0].Postdescription
       : "";
   const decodedContent = he.decode(rowData);
+
+  // Assign ids to headings so TOC anchors (#1, #2, ...) match; preserve existing ids
+  useEffect(() => {
+    const container = contentRef.current;
+    if (!container) return;
+    const headings = container.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    let nextId = 1;
+    headings.forEach((el) => {
+      if (!el.id) {
+        el.id = String(nextId);
+        nextId += 1;
+      }
+    });
+  }, [decodedContent]);
 
   if (!post) {
     return <SkeletonBlog />;
@@ -76,7 +91,11 @@ export default function BlogDetails({ slug: slugProp, isPreview = false }) {
         </div>
       </div>
       <h1 className="text-[25px] lg:text-[30px] font-bold">{post?.data[0]?.PostTitle}</h1>
-      <div dangerouslySetInnerHTML={{ __html: decodedContent }} />
+      <div
+        ref={contentRef}
+        className="blog-detail-body [&_h1]:scroll-mt-20 [&_h2]:scroll-mt-20 [&_h3]:scroll-mt-20 [&_h4]:scroll-mt-20 [&_h5]:scroll-mt-20 [&_h6]:scroll-mt-20"
+        dangerouslySetInnerHTML={{ __html: decodedContent }}
+      />
     </article>
   );
 }
