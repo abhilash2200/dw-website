@@ -13,7 +13,7 @@ import { useBlogDetailLoading } from "../context/BlogDetailContext";
 export default function BlogDetails({ slug: slugProp, isPreview = false }) {
   const pathname = usePathname();
   const slug = (slugProp ?? pathname.replace(/^\/blogs\/preview\/?/, '').replace(/^\/blogs\/?/, '')) || '';
-  const { setLoading } = useBlogDetailLoading();
+  const { setLoading, setBlogId } = useBlogDetailLoading();
 
   const [post, setPost] = useState(null);
 
@@ -28,6 +28,8 @@ export default function BlogDetails({ slug: slugProp, isPreview = false }) {
         );
         const data = await res.json();
         setPost(data);
+        const id = data?.data?.[0]?.PostId ?? data?.data?.[0]?.Id ?? null;
+        setBlogId(id != null ? Number(id) : null);
       } catch (error) {
         console.error("Error fetching blog post:", error);
       } finally {
@@ -36,7 +38,7 @@ export default function BlogDetails({ slug: slugProp, isPreview = false }) {
     };
 
     fetchPost();
-  }, [slug, isPreview, setLoading]);
+  }, [slug, isPreview, setLoading, setBlogId]);
 
   const rowData =
     Array.isArray(post?.data) && post?.data[0]?.Postdescription

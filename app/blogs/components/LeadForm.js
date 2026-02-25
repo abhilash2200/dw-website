@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TextField, MenuItem, CircularProgress } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import Link from "next/link";
 import { useMyContext } from "@/app/context/MyContext";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { useBlogDetailLoading } from "../context/BlogDetailContext";
 import SkeletonLeadForm from "./SkeletonLeadForm";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
 const services = [
   { id: 1, name: "Digital Marketing" },
@@ -70,6 +72,24 @@ export default function LeadForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openWarningSnackbar, setOpenWarningSnackbar] = useState(false);
   const [formMessage, setFormMessage] = useState("");
+  const [recentBlogs, setRecentBlogs] = useState([]);
+  const [recentBlogsLoading, setRecentBlogsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRecentBlogs = async () => {
+      try {
+        const res = await fetch("/api/blogs");
+        const data = await res.json();
+        const list = data?.data ?? [];
+        setRecentBlogs(Array.isArray(list) ? list.slice(0, 5) : []);
+      } catch (err) {
+        setRecentBlogs([]);
+      } finally {
+        setRecentBlogsLoading(false);
+      }
+    };
+    fetchRecentBlogs();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -232,6 +252,42 @@ export default function LeadForm() {
           )}
         </button>
       </form>
+
+      {/* Recent Blog Section */}
+      <div className="mt-6 pt-5 border-t border-[#e5e7eb]">
+        <p className="font-semibold text-[18px] text-[#11009E] mb-3">
+          Recent Blogs
+        </p>
+        {recentBlogsLoading ? (
+          <div className="space-y-2">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="h-12 bg-[#e5e7eb] rounded animate-pulse" />
+            ))}
+          </div>
+        ) : recentBlogs.length > 0 ? (
+          <ul className="space-y-3">
+            {recentBlogs.map((post) => (
+              <li key={post.PostUrl}>
+                <Link
+                  href={`/blogs/${post.PostUrl}`}
+                  className="group flex gap-2 text-sm text-[#374151] hover:text-[#11009E] transition-colors"
+                  title={post.PostTitle}
+                >
+                  <CalendarMonthOutlinedIcon className="shrink-0 mt-0.5 text-[#6b7280]" fontSize="small" />
+                  <span className="line-clamp-2 group-hover:underline">
+                    {post.PostTitle}
+                  </span>
+                </Link>
+                <p className="text-xs text-[#6b7280] ml-6 mt-0.5">
+                  {post.PostDate?.split("T")[0]?.replaceAll("-", "/")}
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm text-[#6b7280]">No recent blogs.</p>
+        )}
+      </div>
 
       <Snackbar
         open={openWarningSnackbar}
