@@ -12,7 +12,7 @@ export default function BlogDetailLayout({ children }) {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[260px_1fr_300px] xl:gap-10">
           {/* Left sidebar: Table of Contents – sticky below header */}
           <aside
-            className="order-1 relative z-10 lg:sticky lg:self-start"
+            className="order-1 relative z-10 lg:sticky lg:self-start hidden lg:block"
             style={{ top: HEADER_OFFSET }}
             aria-label="Table of contents"
           >

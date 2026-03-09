@@ -72,6 +72,7 @@ export default function BlogDetails({ slug: slugProp, isPreview = false }) {
   return (
     <article className="blog-detail-content">
       <div>
+      <h1 className="text-[20px] font-bold block lg:hidden leading-tight mb-5">{post?.data[0]?.PostTitle}</h1>
         <Image
           className="rounded bg-slate-200"
           src={`https://dwcrm.thenoncoders.in/${post?.data[0]?.PostHeaderImage}`}
@@ -80,7 +81,7 @@ export default function BlogDetails({ slug: slugProp, isPreview = false }) {
           height={500}
           alt={post?.data[0]?.ThumbImageAlt || "digital wolf blogs"}
         />
-        <div className="py-2 flex justify-between px-2 items-center">
+        <div className="py-2 flex justify-between px-2 items-center mb-2">
           <p className="text-[#565656] flex items-center gap-1">
             <CategoryOutlinedIcon fontSize="small" /> {post?.data[0]?.CategoryName}
           </p>
@@ -90,7 +91,7 @@ export default function BlogDetails({ slug: slugProp, isPreview = false }) {
           </p>
         </div>
       </div>
-      <h1 className="text-[25px] lg:text-[30px] font-bold">{post?.data[0]?.PostTitle}</h1>
+      <h1 className="text-[25px] lg:text-[30px] leading-tight mb-3 font-bold hidden lg:block">{post?.data[0]?.PostTitle}</h1>
       <div
         ref={contentRef}
         className="blog-detail-body [&_h1]:scroll-mt-20 [&_h2]:scroll-mt-20 [&_h3]:scroll-mt-20 [&_h4]:scroll-mt-20 [&_h5]:scroll-mt-20 [&_h6]:scroll-mt-20"

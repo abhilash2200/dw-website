@@ -41,7 +41,7 @@ export default function TableOfContents() {
     let el = id ? document.getElementById(id) : null;
     if (!el) {
       const container = document.querySelector(".blog-detail-body");
-      const headings = container ? container.querySelectorAll("h1, h2, h3, h4, h5, h6") : [];
+      const headings = container ? container.querySelectorAll("h2") : [];
       el = headings[typeof index === "number" ? index : 0];
     }
     if (el) {
