@@ -36,17 +36,15 @@ export default function TableOfContents() {
   const getAnchor = (item) =>
     item?.Anchor ?? item?.anchor ?? item?.Slug ?? item?.slug ?? item?.Id ?? item?.id ?? "";
 
-  const scrollToSection = useCallback((anchor, index) => {
-    const id = String(anchor || "").replace(/^#+/, "");
-    let el = id ? document.getElementById(id) : null;
-    if (!el) {
-      const container = document.querySelector(".blog-detail-body");
-      const headings = container ? container.querySelectorAll("h2") : [];
-      el = headings[typeof index === "number" ? index : 0];
-    }
+  // Scroll only to <h2> elements; do not change URL hash
+  const scrollToSection = useCallback((index) => {
+    const container = document.querySelector(".blog-detail-body");
+    if (!container) return;
+    const headings = container.querySelectorAll("h2");
+    if (!headings.length) return;
+    const el = headings[typeof index === "number" && index < headings.length ? index : 0];
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
-      if (id) window.history.replaceState(null, "", `#${id}`);
     }
   }, []);
 
@@ -56,9 +54,8 @@ export default function TableOfContents() {
       if (button) {
         e.preventDefault();
         e.stopPropagation();
-        const anchor = button.getAttribute("data-toc-anchor");
         const index = parseInt(button.getAttribute("data-toc-index"), 10);
-        scrollToSection(anchor, isNaN(index) ? 0 : index);
+        scrollToSection(isNaN(index) ? 0 : index);
       }
     },
     [scrollToSection]
@@ -106,7 +103,7 @@ export default function TableOfContents() {
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    scrollToSection(anchor, index);
+                    scrollToSection(index);
                   }}
                 >
                   {title || anchor}
